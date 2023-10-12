@@ -6,7 +6,8 @@
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.9.6"
   },
   "name": "nodefut",
   "version": "1.0.0",

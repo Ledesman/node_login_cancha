@@ -1,0 +1,53 @@
+<h1>create</h1>
+<%- include('parcials/header'); -%>
+
+
+
+      
+    <fieldset>
+  <legend id="hora">
+    restan 15 minutos:
+<span id="clock">
+
+    </span>
+    <h2 id="reloj"></h2>
+  </legend>
+
+</fieldset>
+<hr>
+<div class="container mt-4">     
+    <div class="card border-secondary">  
+        <div class="card-header">Nuevo Registro Cancaha1</div>
+        <div class="card-body">
+            <form action="/save" method="POST">
+                <div class="mb-3">
+                <label for="hora" class="form-label">Colocar Hora disponible</label>
+                <input type="time" class="form-control" id="hora" name="hora" tabindex="1">
+                </div>   
+                <div class="mb-3">
+                <label for="estado" class="form-label">Esta Disponible</label>
+                <select id="estado" name="estado" class="form-select" aria-label="Default select example" tabindex="2">
+                    <option value="0" selected>Libre</option>
+                    <option value="1">Ocupado</option>                    
+                </select>
+                </div>       
+                <div class="mb-3">
+                    <label for="color" class="form-label">color</label>
+                    <select id="color" name="color" class="form-select" aria-label="Default select example" tabindex="2">
+                        <option type="" value="green" selected>Verde</option>
+                        <option value="red">Rojo</option>                    
+                    </select>
+                    </div>                               
+                <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+                <a href="/" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>        
+</div>
+
+<br>
+
+
+
+
+<%- include('parcials/footer'); -%>

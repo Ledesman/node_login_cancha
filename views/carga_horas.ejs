@@ -1,0 +1,75 @@
+
+
+
+<%- include('parcials/header'); -%>
+
+
+<div class="container ">
+      
+    <fieldset>
+  <legend id="hora">
+    restan 15 minutos:
+<span id="clock">
+
+    </span>
+    <h2 id="reloj"></h2>
+  </legend>
+</fieldset>
+
+         
+         
+        </div>
+  
+    <div class="col-12">
+    
+    <select id="cancha" name="cancha" class="form-select" aria-label="Default select example">
+      <option value="cancha1">Cancha1</option>
+      
+
+    </select>
+    </div>
+    <div class="col-12">
+        <h6>Cambiar :</h6>
+      <a class="btn btn-outline-primary" href="/carga2">Cancha2</a>
+      
+     <button type="submit" id="input_Alq" name="input_Alq" class="btn btn-outline-primary" value="crear">Cargar</button>
+
+    </div>
+
+</div>
+<br>
+<div class="container">
+  <table class="table table-bordered border-primary text-center mt-4">
+  <thead>
+    <tr class="bg-primary text-white">
+      <th scope="col">ID</th>
+      <th scope="col">Hora</th>
+      <th scope="col">Estado</th>
+      <th scope="col">color</th>
+    </tr>
+  </thead>
+  <tbody>
+     <%  result.forEach((hora) => { %>
+      
+    
+    <tr>
+      <th scope="row"><%= hora.id %></th>
+      <td><%= hora.hora %></td>
+      <td><%= hora.estado %></td>
+      <td><%= hora.color %></td>
+      <td>
+        <a href="/edit/<%= hora.id %>" class="btn btn-outline-info">Editar</a>
+        <a href="/edit" class="btn btn-outline-danger">borar</a>
+      </td>
+        
+
+    </tr>
+    
+  </tbody>
+ <% }) %> 
+</table>
+</div>
+
+
+<hr>
+<%- include('parcials/footer'); -%>

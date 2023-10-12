@@ -2,6 +2,8 @@ import express from 'express'
 import  Router  from "express";
 import conexion from '../database/conexion.js'
 import bcrypt from "bcryptjs";
+import ruta from '../controllers/crud.js'
+
 
 import session from "express-session";
 
@@ -15,31 +17,129 @@ import session from "express-session";
 }));
 
 
-// router.get('/', (req, res)=>{
-//     res.render('index' , {title: 'Inicio'})  
-//   });
-//   const dbcon = conexion();
-// router.get('/login', (req, res)=>{
-//     const usuarios = "SELECT * FROM usuarios"
-//     conexion.query(usuarios, (err, result) =>{
+router.get('/carga', (req, res)=>{
+  
+  
+  conexion.query('SELECT * FROM horarios', (err, result) =>{
 
-//         if (err) {
-//             throw err
-//         }
-//         else{
-//             //trae todos los datos
-//             console.log(result);
+       if (err) {
+           throw err
+       }
+      else{
+           //trae todos los datos
+           res.render('carga_horas', {result:result})
+   }
+       })
+      
+     
+  });
 
-            
-//          res.render('login',{
-//            title: result
-//         })
-//     }
-//         })
+  router.get('/carga2', (req, res)=>{
+    
+  
+    conexion.query('SELECT * FROM horario2', (err, result) =>{
+  
+         if (err) {
+             throw err
+         }
+        else{
+             //trae todos los datos
+             res.render('carga_hora2', {result:result})
+     }
+         })
         
+       
+     });
 
-//     })
-   
+
+  router.get('/create2', (req, res)=>{
+    res.render('create2' )  
+  });
+//RUTA PARA INSERTAR LA EN EL FORMULARIO DE LA CANCHA 2
+  router.post('/cancha2', (req, res)=>{
+    const hora = req.body.hora;
+     const estado = req.body.estado;
+     const color = req.body.color;
+
+  
+     conexion.query('INSERT INTO horario2 SET ?', {hora:hora, estado:estado, color:color}, (err, result)=>{
+        if (err) {
+            console.log(err)
+        }else{
+          res.redirect('/');
+        }
+     })
+  })
+
+  router.get('/cancha1', (req, res)=>{
+    res.render('canchas1' )  
+  });
+  router.get('/cancha2', (req, res)=>{
+    res.render('canchas2' )  
+  });
+
+  //RUTA PARA EDITAR cancha1
+router.get('/edit/:id', (req, res)=>{
+  const id = req.params.id
+  conexion.query('SELECT * FROM horarios WHERE id=?',[id], (err, result) =>{
+
+    if (err) {
+        throw err
+    }
+   else{
+        //trae todos los datos
+        res.render('edit', {horas:result[0]})
+}
+    })
+})
+router.get('/edit2/:id', (req, res)=>{
+  const id = req.params.id
+  conexion.query('SELECT * FROM horario2 WHERE id=?',[id], (err, result) =>{
+
+    if (err) {
+        throw err
+    }
+   else{
+        //trae todos los datos
+        res.render('edit2', {horas:result[0]})
+}
+    })
+})
+
+
+  router.get('/create', (req, res) =>{
+    res.render('create')
+  });
+  
+  
+router.post('/save', (req, res)=>{
+  const hora = req.body.hora;
+   const estado = req.body.estado;
+   const color = req.body.color;
+
+   conexion.query('INSERT INTO horarios SET ?', {hora:hora, estado:estado, color:color}, (err, result)=>{
+      if (err) {
+          console.log(err)
+      }else{
+        res.redirect('/');
+      }
+   })
+})
+
+router.post('/cancha2', (req, res)=>{
+  const hora = req.body.hora;
+   const estado = req.body.estado;
+   const color = req.body.color;
+
+   conexion.query('INSERT INTO horarios SET ?', {hora:hora, estado:estado, color:color}, (err, result)=>{
+      if (err) {
+          console.log(err)
+      }else{
+        res.redirect('/');
+      }
+   })
+})
+//   const dbcon = conexion();
 
 
 // const horarios = "SELECT * FROM usuarios"
@@ -57,9 +157,9 @@ import session from "express-session";
 
 //     }
 // });
-//   router.get('/login', (req, res)=>{
-//     res.render('login',{title: 'login'})  
-//   });
+ router.get('/login', (req, res)=>{
+     res.render('login')  
+   });
   
   
   router.get('/register', (req, res)=>{
@@ -120,7 +220,7 @@ router.post('/auth',async (req, res)=>{
 					alertIcon:'success',
 					showConfirmButton: false,
 					timer: 1500,
-					ruta: ''
+					ruta: 'carga'
             });
         }
         
