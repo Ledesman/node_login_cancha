@@ -31,10 +31,10 @@
       <th scope="row"><%= hora.id %></th>
       <td><%= hora.hora %></td>
       <td><%= hora.estado %></td>
-      <td><%= hora.color %></td>
+      <td style="background-color:<%= hora.color %>;"><%= hora.color %></td>
       <td>
         <a href="/edit2/<%= hora.id %>" class="btn btn-outline-info">Editar</a>
-        <a href="/edit" class="btn btn-outline-danger">borar</a>
+        <a href="/delete2/<%= hora.id %>" class="btn btn-outline-danger">borar</a>
       </td>
         
 

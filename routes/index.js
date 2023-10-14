@@ -2,7 +2,7 @@ import express from 'express'
 import  Router  from "express";
 import conexion from '../database/conexion.js'
 import bcrypt from "bcryptjs";
-import ruta from '../controllers/crud.js'
+import controller from '../controllers/index.cli.js';
 
 
 import session from "express-session";
@@ -51,10 +51,11 @@ router.get('/carga', (req, res)=>{
        
      });
 
-
+// LLENDO A LA RUTA DOS PARA CREAR
   router.get('/create2', (req, res)=>{
     res.render('create2' )  
   });
+
 //RUTA PARA INSERTAR LA EN EL FORMULARIO DE LA CANCHA 2
   router.post('/cancha2', (req, res)=>{
     const hora = req.body.hora;
@@ -66,19 +67,19 @@ router.get('/carga', (req, res)=>{
         if (err) {
             console.log(err)
         }else{
-          res.redirect('/');
+          res.redirect('carga2');
         }
      })
   })
+//Ruta con controlador que se conecta el cliente
+  router.get('/canchas', controller.index);
 
-  router.get('/cancha1', (req, res)=>{
-    res.render('canchas1' )  
-  });
+
   router.get('/cancha2', (req, res)=>{
     res.render('canchas2' )  
   });
 
-  //RUTA PARA EDITAR cancha1
+  //oB TENIENDO EL ID DE LA CHANCHA UNO
 router.get('/edit/:id', (req, res)=>{
   const id = req.params.id
   conexion.query('SELECT * FROM horarios WHERE id=?',[id], (err, result) =>{
@@ -92,6 +93,7 @@ router.get('/edit/:id', (req, res)=>{
 }
     })
 })
+//OBTENIENDO EL ID DE LA CANCHA2
 router.get('/edit2/:id', (req, res)=>{
   const id = req.params.id
   conexion.query('SELECT * FROM horario2 WHERE id=?',[id], (err, result) =>{
@@ -106,12 +108,40 @@ router.get('/edit2/:id', (req, res)=>{
     })
 })
 
+//ELIMINAR UN REGISTRO DE LA CANCHA UNO
+router.get('/delete/:id', (req, res)=>{
+  const id = req.params.id;
+  conexion.query('DELETE FROM horarios WHERE id = ?',[id], (err, result) =>{
+    if (err) {
+      throw err
+  }
+ else{
+      //trae todos los datos
+      res.render('edit')
+    }
+  })
+})
+
+//ELIMINAR UN REGISTRO DE LA CANCHA DOS
+router.get('/delete2/:id', (req, res)=>{
+  const id = req.params.id;
+  conexion.query('DELETE FROM horario2 WHERE id = ?',[id], (err, result) =>{
+    if (err) {
+      throw err
+  }
+ else{
+      //trae todos los datos
+      res.render('edit')
+    }
+  })
+})
+
 
   router.get('/create', (req, res) =>{
     res.render('create')
   });
   
-  
+  // INSTERTAR DE LA CANCHA UNO
 router.post('/save', (req, res)=>{
   const hora = req.body.hora;
    const estado = req.body.estado;
@@ -121,12 +151,13 @@ router.post('/save', (req, res)=>{
       if (err) {
           console.log(err)
       }else{
-        res.redirect('/');
+        res.redirect('carga');
       }
    })
 })
 
-router.post('/cancha2', (req, res)=>{
+// MUESTRAS LOS DATOS QUE SE ENVIA A CANCHA DOS
+router.post('/save2', (req, res)=>{
   const hora = req.body.hora;
    const estado = req.body.estado;
    const color = req.body.color;
@@ -139,24 +170,23 @@ router.post('/cancha2', (req, res)=>{
       }
    })
 })
-//   const dbcon = conexion();
+// EDITAR LA CONSULTA DE LA CANCHA UNO
+router.post('/update', (req, res)=>{
+  const id = req.body.id;
+  const hora = req.body.hora;
+  const estado = req.body.estado;
+  const color = req.body.color;
+
+  conexion.query('UPDATE horarios SET ? WHERE id =?',[{ hora:hora, estado:estado, color:color}, id], (err, result)=>{
+    if (err) {
+      console.log(err)
+  }else{
+    res.redirect('carga');
+  }
+  });
+})
 
 
-// const horarios = "SELECT * FROM usuarios"
-// conexion.query(horarios, function(err,lista){
-//     if (err) {
-//         throw err
-//     }
-//     else{
-//         //trae todos los datos
-//         console.log(lista); 
-
-//         //console.log(lista.length); cantidad de datos
-//         //console.log(lista[0]); trae un datos
-//         //console.log(lista[0].estado) un datoque solo quiero mostrar
-
-//     }
-// });
  router.get('/login', (req, res)=>{
      res.render('login')  
    });

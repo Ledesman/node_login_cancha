@@ -1,0 +1,47 @@
+<%- include('parcials/header'); -%>
+
+<h1>Pagina de inicio</h1>
+<% if (login) { %>
+<h1> El unuario conectado es : <strong><%= name %> </strong></h1>
+<a class="btn btn-ligh" href="logout" >Salir de Sesion</a> 
+<% } else{ %>
+    <h1><strong> <%= name %></strong></h1>
+    <a class="btn btn-outline-dark" href="/login" type="button" > ir a Login</a>
+<% } %>
+<div class="login-form">
+
+    <h2>Login de Registro</h2>
+    <form class="" id="login1" action="authCli" method="post">
+      <div class="form-floating mb-3">
+        <input type="text" for="usuario" name="usuario" class="form-control rounded-3" id="user" placeholder="nombre@ejemplo.com">
+        <label for="floatingInput"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dirección de correo electrónico</font></font></label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" for="pass" name="pass" class="form-control rounded-3" id="pass" placeholder="Contraseña">
+        <label for="floatingPassword"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Contraseña</font></font></label>
+      </div>
+      <button class="w-100 mb-2 btn btn-lg rounded-3 btn btn-info" type="submit">
+        <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Login</font></font></button>
+      
+      </form>
+        <a href="register" class="btn btn-ligh">Registrarse</a> 
+
+    
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <% if(typeof alert != "undefined"){ %>
+          <script>
+              Swal.fire({
+                title:'<%= alertTitle %>',
+      text:'<%= alertMessage %>',
+      icon:'<%= alertIcon %>',
+      showConfirmButton: <%= showConfirmButton %>,
+      timer: <%= timer %>
+    }).then(()=>{
+      window.location='/<%= ruta %>'
+          })
+          </script>
+          <% } %>
+
+
+<%- include('parcials/footer'); -%>

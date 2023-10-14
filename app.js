@@ -5,6 +5,8 @@ import path from 'path'
 import bodyParser from "body-parser";
 import ruta from './routes/index.js'
 
+
+
 import session from "express-session";
 const app = express();
 
